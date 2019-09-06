@@ -1,5 +1,12 @@
 const express = require('express');
 const app = express();
+const conectDB = require('./config/db');
+
+// Connect Database
+conectDB();
+
+// Init Middleware
+app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) =>
   res.json({ msg: 'Welcome to the ConcactKeeper API!' })
