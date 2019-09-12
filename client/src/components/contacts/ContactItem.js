@@ -1,17 +1,23 @@
 import React, { useContext } from 'react';
-import { link } from 'fs';
 import ContactContext from '../../context/contact/ContactContext';
 import PropTypes from 'prop-types';
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
 
-  const { deleteContact, setCurrent, clearCurrent } = contactContext;
-  const { id, name, email, phone, type } = contact;
+  const {
+    deleteContact,
+    setCurrent,
+    clearCurrent,
+    filterContacts,
+    filterText
+  } = contactContext;
+  const { _id, name, email, phone, type } = contact;
 
-  const onDelete = () => {
-    deleteContact(id);
+  const onDelete = async () => {
+    await deleteContact(_id);
     clearCurrent();
+    filterContacts(filterText);
   };
 
   return (

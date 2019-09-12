@@ -1,12 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ContactContext from '../../context/contact/ContactContext';
-import { format } from 'util';
-import { CLEAR_CURRENT } from '../../context/types';
+//import { format } from 'util';
+//import { CLEAR_CURRENT } from '../../context/types';
 
 const ContactForm = () => {
   const contactContext = useContext(ContactContext);
 
-  const { addContact, current, clearCurrent, updateContact } = contactContext;
+  const {
+    addContact,
+    current,
+    clearCurrent,
+    updateContact,
+    filterContacts,
+    filterText
+  } = contactContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -35,13 +42,14 @@ const ContactForm = () => {
       [e.target.name]: e.target.value
     });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (current === null) {
-      addContact(contact);
+      await addContact(contact);
     } else {
-      updateContact(contact);
+      await updateContact(contact);
     }
+    if (filterText !== '' && filterText !== null) filterContacts(filterText);
     clearAll();
   };
 
